@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        html, body { 
+        margin: 0; 
+        padding: 0; 
+        width: 100%; 
+        height: 100%; 
+        overflow: 
+        hidden;   
+    }
+        canvas { 
+            width: 100%; 
+            height: 100%; 
+            display: block; 
+            outline: none; 
+        }
+    </style>
+</head>
+
+<body>
+<canvas id="renderCanvas"></canvas>
+
+<script src="https://cdn.babylonjs.com/havok/HavokPhysics_umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/babylonjs@6/babylon.js"></script>
+<script src="https://cdn.babylonjs.com/gui/babylon.gui.js"></script>
+<link href="https://fonts.cdnfonts.com/css/spicy-sale" rel="stylesheet">
+
+
+<script>
+const canvas = document.getElementById("renderCanvas");
+const engine = new BABYLON.Engine(canvas, true);
+
+const createScene = async () => {
+    const scene = new BABYLON.Scene(engine);
+    scene.clearColor = new BABYLON.Color4(1.0, 0.7, 0.8, 1.0);
+
+    const havokInstance = await HavokPhysics();
+    const hk = new BABYLON.HavokPlugin(true, havokInstance);
+    scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), hk);
+
+
+    const camera = new BABYLON.ArcRotateCamera(
+    "Camera",
+    Math.PI / 2,    
+    Math.PI / 3,     
+    50,              
+    new BABYLON.Vector3(0, 10, -10),
+    scene
+);
+    camera.attachControl(canvas, true);
+    camera.setTarget(new BABYLON.Vector3(0, 12, -10));
+    camera.upperBetaLimit = Math.PI / 2.2;
+    camera.lowerRadiusLimit = 10;
+    camera.upperRadiusLimit = 100;
+
+    const openingSound = new BABYLON.Sound(
+        "openingSound",
+        "/mnt/data/e0324cd1-9027-4ef9-9b2e-aa5ea22102fe.wav",
+        scene,
+        null,
+        { autoplay: true, 
+            loop: false, 
+            volume: 0.5 
+        }
+    );
+
+    const light = new BABYLON.HemisphericLight("light",
+        new BABYLON.Vector3(0, 1, 0),
+        scene
+    );
+    light.intensity = 0.8;
+
+    const stage = BABYLON.MeshBuilder.CreateBox(
+        "stage",
+        { width: 60, height: 2, depth: 60 },
+        scene
+    );
+    stage.position.y = -1;
+
+
+    const pinkWoodMat = new BABYLON.StandardMaterial("pinkWoodMat", scene);
+    pinkWoodMat.diffuseColor = new BABYLON.Color3(1.0, 0.4, 0.7);
+    pinkWoodMat.diffuseTexture = new BABYLON.Texture( "https://assets.babylonjs.com/textures/amiga.jpg", scene);
+    pinkWoodMat.specularColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+    stage.material = pinkWoodMat;
+
+    new BABYLON.PhysicsAggregate(
+        stage,
+        BABYLON.PhysicsShapeType.BOX,
+        { 
+            mass: 0, 
+            friction: 0.8, 
+            restitution: 0.1 
+        },
+        scene
+    );
+const blockMat = new BABYLON.StandardMaterial("blockMat", scene);
+blockMat.diffuseColor = new BABYLON.Color3(1.0, 0.95, 0.85);
+blockMat.emissiveColor = new BABYLON.Color3(0.2, 0.2, 0.2); 
+blockMat.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/textures/albedo.png", scene);
+blockMat.specularColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+
+const blockLength = 10.5;  
+const blockHeight = 2.0;   
+const blockWidth = 2.8;    
+    
+const blockSpacing = 8.0;  
+
+scene.actionManager = new BABYLON.ActionManager(scene);
+
+function createBlock(name, x, y, z, rotationY) {
+    const block = BABYLON.MeshBuilder.CreateBox(
+        name,
+        { 
+            width: 2.8, 
+            height: 2.0, 
+            depth: 10.5 }, 
+        scene
+    );
+    block.position.set(x, y, z);
+    block.rotation.y = rotationY;
+    block.material = blockMat;
+
+    
+    const aggregate = new BABYLON.PhysicsAggregate( block,
+        BABYLON.PhysicsShapeType.BOX,
+        { 
+            mass: 10,           
+            friction: 2.0,     
+            restitution: 0.1 
+        },
+        scene
+    );
+    aggregate.body.setCollisionCallbackEnabled(true);
+    aggregate.body.setLinearDamping(1.8);
+    aggregate.body.setAngularDamping(1.8);
+
+    block.isPickable = true;
+    block.actionManager = new BABYLON.ActionManager(scene);
+    
+    block.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            () => {
+            
+                const forward = block.getDirection(BABYLON.Axis.Z);
+                const forceMagnitude = 80; 
+                const pullForce = forward.scale(forceMagnitude);
+
+                aggregate.body.applyImpulse(pullForce, block.getAbsolutePosition());
+                
+                
+                aggregate.body.setLinearDamping(0.1);
+            }
+        )
+    );
+    
+    return block;
+}
+
+const layers = 6;
+const startY = 0.6;
+const gap = blockHeight;  
+
+    for (let i = 0; i < layers; i++) {
+        const y = startY + i * gap;
+        const isEven = i % 2 === 0;
+        const rotationY = isEven ? 0 : Math.PI / 2;
+
+   const blockSpacing = 3.0;  
+
+if (isEven) {
+    createBlock(`block_${i}_1`, -blockSpacing, y, 0, rotationY);
+    createBlock(`block_${i}_2`, 0, y, 0, rotationY);
+    createBlock(`block_${i}_3`, blockSpacing, y, 0, rotationY);
+} else {
+    createBlock(`block_${i}_1`, 0, y, -blockSpacing, rotationY);
+    createBlock(`block_${i}_2`, 0, y, 0, rotationY);
+    createBlock(`block_${i}_3`, 0, y, blockSpacing, rotationY);
+}
+    }
+  
+const jengaText = createFloatingText(scene);
+
+
+scene.onBeforeRenderObservable.add(() => {
+    const t = performance.now() * 0.002;
+    jengaText.position.y = 15 + Math.sin(t) * 1.5; // bounce
+});
+    return scene;
+};
+
+function createFloatingText(scene) {
+    const plane = BABYLON.MeshBuilder.CreatePlane("jengaText", { size: 20 }, scene);
+    plane.position = new BABYLON.Vector3(0, 15, -25);
+
+    const texture = new BABYLON.DynamicTexture("textTexture", 
+    { 
+        width: 1024, 
+        height: 512 
+    }, 
+    scene, false);
+    texture.hasAlpha = true;
+
+    const ctx = texture.getContext();
+    ctx.clearRect(0, 0, 1024, 512);
+
+    ctx.font = "160px 'Spicy Sale'";
+    ctx.textAlign = "center";
+
+  
+    ctx.lineWidth = 20;
+    ctx.strokeStyle = "#ffffff";
+    ctx.strokeText("JENGAAA", 512, 300);
+
+   
+    ctx.fillStyle = "#ff4da6"; 
+    ctx.fillText("JENGAAA", 512, 300);
+
+    texture.update();
+
+    const mat = new BABYLON.StandardMaterial("textMat", scene);
+    mat.diffuseTexture = texture;
+    mat.emissiveColor = new BABYLON.Color3(1, 1, 1); // glow-ish
+    mat.backFaceCulling = false;
+
+    plane.material = mat;
+
+    return plane;
+}
+createScene().then((scene) => {
+
+    engine.runRenderLoop(() => {
+        scene.render();
+    });
+});
+
+window.addEventListener("resize", () => {
+    engine.resize();
+});
+</script>
+</body>
+</html>
