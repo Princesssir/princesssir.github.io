@@ -17,7 +17,7 @@ An interactive, web-based 3D Jenga tower built with **Babylon.js** and powered b
 - [Play it live](https://princesssir.github.io/jenga/)
 
 ### MonsterClinic
-A team-built hospital admissions sim made with **Godot** and **C#**. I worked on the save system, patient admit/reject logic, player-guidance UI, and patient stat refresh systems as part of a 9-person team.
+I worked as a programmer, game designer and narrative designer to build and incremental hospital game made with **Godot** and **C#**. I worked on the save system, patient admission logic, player-guidance UI, and patient stat systems as part of a 9-person team.
 
 - Engine: Godot
 - Language: C#
