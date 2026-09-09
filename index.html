@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Princesssir — Game Engineer Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #14161c;
+    --bg-raised: #1b1e26;
+    --line: #2a2e38;
+    --text: #e9e6df;
+    --text-dim: #8b8f98;
+    --amber: #e8a33d;
+    --teal: #3fb8af;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 88px 24px 120px;
+  }
+
+  header {
+    margin-bottom: 72px;
+  }
+
+  .role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    letter-spacing: 0.02em;
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 44px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 20px;
+  }
+
+  header p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    max-width: 52ch;
+    margin: 0;
+  }
+
+  .links {
+    margin-top: 28px;
+    display: flex;
+    gap: 20px;
+  }
+
+  .links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .links a:hover {
+    color: var(--amber);
+    border-color: var(--amber);
+  }
+
+  section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-dim);
+    margin: 0 0 24px;
+  }
+
+  .project {
+    display: block;
+    text-decoration: none;
+    color: var(--text);
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+    transition: padding-left 0.15s ease;
+  }
+
+  .project:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .project:hover {
+    padding-left: 8px;
+  }
+
+  .project:hover .project-title {
+    color: var(--amber);
+  }
+
+  .project-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .project-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    transition: color 0.15s ease;
+  }
+
+  .project-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    white-space: nowrap;
+  }
+
+  .project-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    max-width: 56ch;
+    margin: 0 0 14px;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stack span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 3px 8px;
+  }
+
+  footer {
+    margin-top: 80px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="role">L3 Game Engineer · HTI &amp; AI</p>
+      <h1>Building systems people<br />actually want to play with.</h1>
+      <p>I design human-centered systems, intelligent agent behaviors, and intuitive digital experiences. I like to create and write — I'm a problem solver.</p>
+      <div class="links">
+        <a href="https://github.com/Princesssir">GitHub</a>
+        <a href="mailto:you@example.com">Email</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>Projects</h2>
+
+      <a class="project" href="./jenga/">
+        <div class="project-top">
+          <span class="project-title">3D Physics Jenga</span>
+          <span class="project-status">Live demo →</span>
+        </div>
+        <p class="project-desc">An interactive, web-based 3D Jenga tower built with Babylon.js and powered by the Havok Physics Engine. Focused on physics aggregates and precise collision detection.</p>
+        <div class="stack">
+          <span>Babylon.js</span>
+          <span>Havok Physics</span>
+          <span>WebGL</span>
+        </div>
+      </a>
+
+      <a class="project" href="https://github.com/HerkusABG/MonsterClinic">
+        <div class="project-top">
+          <span class="project-title">MonsterClinic</span>
+          <span class="project-status">Team project →</span>
+        </div>
+        <p class="project-desc">A team-built hospital admissions sim. I worked on the save system, patient admit/reject logic, player-guidance UI, and patient stat refresh systems.</p>
+        <div class="stack">
+          <span>Godot</span>
+          <span>C#</span>
+          <span>Team of 9</span>
+        </div>
+      </a>
+    </section>
+
+    <footer>
+      Built and maintained by Princesssir.
+    </footer>
+  </div>
+</body>
+</html>
