@@ -6,27 +6,22 @@
 <title>Princesssir — Creative Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  @font-face{
-  font-family: 'Classy';
-  src: url('fonts/Classy Free Trial.ttf') format('truetype');
-  font-display: swap;
-}
-
   :root{
     --ink: #F1F1F1;
     --ink-soft: #B7B7B2;
+    --line: rgba(241,241,241,0.18);
     --spray-red: #D6321F;
     --spray-yellow: #F2C230;
     --spray-cyan: #2FB6C4;
     --font-display: 'Fraunces', serif;
     --font-mono: 'IBM Plex Mono', monospace;
     --font-body: 'IBM Plex Sans', sans-serif;
-   }
+  }
 
   *{ box-sizing: border-box; }
-  html{ -webkit-font-smoothing: antialiased; }
+  html{ -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
 
   body{
     margin: 0;
@@ -82,20 +77,6 @@
     margin-left: 18px;
   }
 
-  header.topbar nav a:hover{
-    color: var(--ink);
-  }
-
-  header.topbar .mark{
-    font-family: var(--font-display);
-    font-size: 22px;
-    letter-spacing: 0.03em;
-    text-decoration: none;
-    color: var(--ink);
-    display: inline-block;
-    transform: rotate(-2deg);
-  }
-
   header.topbar .role{
     display: block;
     margin-top: 4px;
@@ -113,6 +94,7 @@
     justify-content: center;
     padding: 40px 0 40px;
     position: relative;
+    min-height: 100vh;
   }
 
   h1{
@@ -198,23 +180,82 @@
     transform: scaleX(1);
   }
 
-  footer{
+  /* ---------- About section — same theme/fonts as hero, no photo ---------- */
+
+  .about-section{
+    padding: 60px 0 40px;
+    border-top: 1px solid var(--line);
+    scroll-margin-top: 24px;
+  }
+
+  .about-section .about-label{
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1;
+    margin: 0 0 40px;
+    letter-spacing: -0.01em;
+  }
+
+  .about-section section{
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .about-section section:first-of-type{
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .about-section h2{
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(30px, 5vw, 48px);
+    line-height: 0.95;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .about-section .entry{
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  .about-section .entry + .entry{
+    margin-top: 4px;
+  }
+
+  .about-section .entry .role{
+    font-weight: 500;
+  }
+
+  .about-section .entry .date{
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-left: 8px;
+  }
+
+  footer.site-footer{
     padding: 22px 0 32px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-end;
     gap: 16px;
-    border-top: 1px solid rgba(241,241,241,0.18);
+    border-top: 1px solid var(--line);
   }
 
-  footer .links{
+  footer.site-footer .links{
     display: flex;
     gap: 22px;
     padding-top: 18px;
   }
 
-  footer .links a{
+  footer.site-footer .links a{
     font-family: var(--font-display);
     font-size: 15px;
     letter-spacing: 0.02em;
@@ -222,11 +263,7 @@
     color: var(--ink);
   }
 
-  footer .links a:hover{
-    color: var(--ink);
-  }
-
-  footer .loc{
+  footer.site-footer .loc{
     padding-top: 18px;
     font-family: var(--font-mono);
     font-size: 13px;
@@ -234,7 +271,7 @@
   }
 
   @media (max-width: 560px){
-    footer{ flex-direction: column; align-items: flex-start; }
+    footer.site-footer{ flex-direction: column; align-items: flex-start; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -250,7 +287,7 @@
   <header class="topbar">
     <span class="role">Creative Engineer</span>
     <nav>
-      <a href="about.html">about me</a>
+      <a href="#about">about me</a>
       <a href="projects.html">work</a>
     </nav>
   </header>
@@ -271,7 +308,41 @@
     </p>
   </main>
 
-  <footer>
+  <section id="about" class="about-section">
+    <p class="about-label">About me</p>
+
+    <section>
+      <h2>Experience</h2>
+      <div class="entry">
+        <span class="role">Corning Incorporated</span>
+        <span class="date">2025–2026</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <div class="entry">
+        <span class="role">Mediadesign University of Applied Sciences</span>
+        <span class="date">2024–present</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Languages</h2>
+      <div class="entry">English — Fluent</div>
+      <div class="entry">German — Upper Intermediate</div>
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <div class="entry">Game engines — Unity, Godot</div>
+      <div class="entry">Scripting — C#, HTML, JavaScript</div>
+      <div class="entry">Data building, analysis — Microsoft Power Platform</div>
+      <div class="entry">Graphics — Maya, Adobe Photoshop, Canva</div>
+    </section>
+  </section>
+
+  <footer class="site-footer">
     <div class="links">
       <a href="https://github.com/Princesssir" target="_blank" rel="noopener">github</a>
       <a href="https://www.linkedin.com/in/chidera-onuegbu" target="_blank" rel="noopener">linkedin</a>
