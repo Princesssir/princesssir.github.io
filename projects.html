@@ -23,6 +23,11 @@
     src: url('fonts/Scratch-SM-Bold.otf') format('opentype');
     font-display: swap;
   }
+  @font-face{
+    font-family: 'UglyHandwriting';
+    src: url('fonts/MyUglyHandwriting-Regular.otf') format('opentype');
+    font-display: swap;
+  }
 
   :root{
     --ink: #F1F1F1;
@@ -256,6 +261,20 @@
       -1px -1px 1px rgba(0,0,0,0.35);
   }
 
+  /* Kiosk 69 — neon storefront sign title */
+  .title-kiosk{
+    font-family: 'UglyHandwriting', var(--font-display), sans-serif;
+    font-weight: 400;
+    font-size: clamp(32px, 5.5vw, 52px);
+    letter-spacing: 0.02em;
+    margin: 0 0 4px;
+    line-height: 1;
+    transform: rotate(1deg);
+    display: inline-block;
+    color: #F2C230;
+    text-shadow: 0 0 10px rgba(242,194,48,0.55), 2px 2px 0 rgba(0,0,0,0.25);
+  }
+
   .project p.desc{
     font-size: 16px;
     line-height: 1.6;
@@ -341,12 +360,12 @@
   <header class="topbar">
     <nav>
       <a href="index.html">index</a>
-      <a href="about.html">about me</a>
+      <a href="index.html#about">about me</a>
     </nav>
   </header>
 
   <h1 class="page-title">The work</h1>
-  <p class="count">02 entries</p>
+  <p class="count">03 entries</p>
 
   <section class="project">
     <div class="idx">01</div>
@@ -403,6 +422,48 @@
           <span>Godot</span><span>C#</span><span>Team of 9</span>
         </div>
         <a class="project-link" href="https://github.com/HerkusABG/MonsterClinic" target="_blank" rel="noopener">github</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="project">
+    <div class="idx">03</div>
+    <div>
+      <h2 class="title-kiosk">Kiosk 69</h2>
+      <div class="carousel" data-carousel>
+        <div class="carousel-track">
+          <div class="carousel-slide">
+            <video controls muted playsinline>
+              <source src="img/kiosk69.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="carousel-slide">
+            <img src="img/kiosk69-1.jpg" alt="Kiosk 69 screenshot 1">
+          </div>
+          <div class="carousel-slide">
+            <img src="img/kiosk69-2.jpg" alt="Kiosk 69 screenshot 2">
+          </div>
+          <div class="carousel-slide">
+            <img src="img/kiosk69-3.jpg" alt="Kiosk 69 screenshot 3">
+          </div>
+          <div class="carousel-slide">
+            <img src="img/kiosk69-4.jpg" alt="Kiosk 69 screenshot 4">
+          </div>
+          <div class="carousel-slide">
+            <img src="img/kiosk69-5.jpg" alt="Kiosk 69 screenshot 5">
+          </div>
+        </div>
+        <button class="carousel-btn prev" type="button" aria-label="Previous">‹</button>
+        <button class="carousel-btn next" type="button" aria-label="Next">›</button>
+        <div class="carousel-dots"></div>
+      </div>
+      <p class="desc">
+        A VR kiosk simulator set in a fictional post-communist city in the year 2000. As a cashier running an under-the-counter shop, every customer interaction is a trust-or-trick call — read their order and behavior, then decide whether to charge fairly, overcharge, or cut them a discount. Between shifts, reinvest earnings into upgrading the kiosk and restocking inventory.
+      </p>
+      <div class="meta-row">
+        <div class="stack">
+          <span>Unity</span><span>Meta Quest</span><span>VR Simulator</span><span>Team of 7</span><span>C#</span>
+        </div>
       </div>
     </div>
   </section>
