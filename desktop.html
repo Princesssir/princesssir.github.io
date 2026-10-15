@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Princesssir — Creative Engineer</title>
+<meta name="description" content="Creative engineer working across programming, gameplay, and narrative. Game engineering student and digital transformation professional based in Berlin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Pixelify+Sans:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1d1b3b;
+  --paper:#fbfaff;
+  --sky:#9cc3ff;
+  --sky-2:#c2dbff;
+  --butter:#ffd85e;
+  --pink:#ff8cb8;
+  --mint:#78e4b6;
+  --lilac:#c9b8ff;
+  --orange:#ffb56b;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font-family:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color:var(--ink);background:var(--sky);overflow:hidden;
+  display:flex;flex-direction:column;
+}
+:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+a{color:inherit}
+
+/* top menu bar */
+.menubar{
+  flex:none;height:38px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 12px;background:var(--paper);border-bottom:2px solid var(--ink);font-size:14px;font-weight:600;
+}
+.menubar .brand{
+  font:700 19px 'Pixelify Sans',monospace;background:none;border:0;color:var(--ink);cursor:pointer;padding:2px 6px;border-radius:6px;
+}
+.menubar .right{display:flex;align-items:center;gap:18px}
+.menubar .right a{text-decoration:none}
+.menubar .right a:hover{text-decoration:underline;text-underline-offset:3px}
+.menubar time{font-variant-numeric:tabular-nums}
+
+/* desktop */
+.desktop{
+  position:relative;flex:1;min-height:0;overflow:hidden;
+  background:
+    radial-gradient(circle at 1px 1px,rgba(29,27,59,.2) 1.2px,transparent 1.6px) 0 0/24px 24px,
+    linear-gradient(165deg,var(--sky-2),var(--sky));
+}
+.icons{
+  position:absolute;top:16px;left:16px;bottom:96px;
+  display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start;gap:14px;
+}
+.icon{
+  width:92px;display:flex;flex-direction:column;align-items:center;gap:7px;padding:4px;
+  background:none;border:0;border-radius:10px;font:600 13px/1.2 inherit;font-family:inherit;color:var(--ink);cursor:pointer;text-align:center;
+}
+.icon .tile{
+  width:54px;height:54px;display:grid;place-items:center;background:var(--tint);
+  border:2px solid var(--ink);border-radius:13px;box-shadow:3px 3px 0 var(--ink);
+}
+.icon:hover .tile{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.icon:active .tile{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.icon .tile.img{width:58px;height:58px;display:block;background:none;border:0;border-radius:0;box-shadow:none}
+.icon .tile.img img{display:block;width:100%;height:100%;filter:drop-shadow(3px 3px 0 var(--ink))}
+.icon:hover .tile.img{box-shadow:none}
+.icon:hover .tile.img img{filter:drop-shadow(4px 4px 0 var(--ink))}
+.icon:active .tile.img img{filter:drop-shadow(1px 1px 0 var(--ink))}
+.bar img.ic{width:20px;height:20px;object-fit:contain}
+.links img{flex:none;width:28px;height:28px}
+.ic{width:26px;height:26px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ic.sm{width:18px;height:18px}
+
+/* windows */
+.win{
+  position:absolute;display:flex;flex-direction:column;
+  max-width:calc(100% - 16px);max-height:calc(100% - 100px);
+  background:var(--paper);border:2px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink);overflow:hidden;
+}
+.win[hidden],.win.min{display:none}
+.win.active{box-shadow:7px 7px 0 var(--ink)}
+.win.max{left:8px!important;top:8px!important;width:calc(100% - 16px)!important;height:calc(100% - 100px)!important;max-height:none}
+.win.pop{animation:pop .18s ease-out}
+@keyframes pop{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
+.bar{
+  flex:none;display:flex;align-items:center;gap:8px;padding:6px 8px 6px 12px;background:var(--tint);
+  border-bottom:2px solid var(--ink);cursor:grab;touch-action:none;user-select:none;
+  font:500 17px 'Pixelify Sans',monospace;
+}
+.bar .title{flex:1;display:flex;align-items:center;gap:7px}
+.bar button{
+  width:23px;height:23px;display:grid;place-items:center;padding:0;background:var(--paper);color:var(--ink);
+  border:2px solid var(--ink);border-radius:6px;font:700 15px/1 system-ui,sans-serif;cursor:pointer;
+}
+.bar button:hover{background:var(--butter)}
+.bar button[data-act="close"]:hover{background:var(--pink)}
+.body{padding:22px 24px 26px;overflow:auto;font-size:16px;line-height:1.55}
+.body > :first-child{margin-top:0}
+.body > :last-child{margin-bottom:0}
+.body h1{font-size:clamp(30px,4.4vw,44px);line-height:1.04;letter-spacing:-.025em;font-weight:800;margin:0 0 14px}
+.body h2{font-size:20px;line-height:1.2;margin:26px 0 6px;font-weight:800;letter-spacing:-.01em}
+.body p{margin:0 0 12px;max-width:58ch}
+.lead{font-size:18px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.btn{
+  display:inline-block;padding:10px 16px;background:var(--pink);color:var(--ink);text-decoration:none;
+  border:2px solid var(--ink);border-radius:10px;box-shadow:3px 3px 0 var(--ink);font:700 15px inherit;font-family:inherit;cursor:pointer;
+}
+.btn.alt{background:var(--butter)}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.row{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:2px dashed rgba(29,27,59,.25)}
+.row:last-of-type{border-bottom:2px dashed rgba(29,27,59,.25)}
+.row .when{white-space:nowrap;font-variant-numeric:tabular-nums}
+.row small{display:block;font-size:14px;opacity:.75}
+.skill{display:grid;grid-template-columns:150px 1fr;gap:4px 16px;padding:10px 0;border-top:2px dashed rgba(29,27,59,.25)}
+.skill:last-of-type{border-bottom:2px dashed rgba(29,27,59,.25)}
+.skill b{font-weight:800}
+.meta{font-size:14px;opacity:.75;margin-bottom:8px}
+.proj{padding:16px 0;border-top:2px dashed rgba(29,27,59,.25)}
+.proj:first-of-type{border-top:0;padding-top:0}
+.proj h2{margin:2px 0 10px}
+.links{display:grid;gap:12px;margin-top:16px}
+.links a{display:flex;align-items:center;gap:12px;padding:12px 14px;border:2px solid var(--ink);border-radius:10px;background:#fff;text-decoration:none;font-weight:700}
+.links a:hover{background:var(--butter)}
+
+/* tools */
+.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:24px 10px;margin:22px 0 4px;padding:0;list-style:none}
+.tool{display:flex;flex-direction:column;align-items:center;gap:9px;font-size:14px;font-weight:600;text-align:center}
+.tool .app{
+  width:66px;height:66px;display:grid;place-items:center;overflow:hidden;
+  border:2px solid var(--ink);border-radius:17px;box-shadow:3px 3px 0 var(--ink);
+  font-weight:800;font-size:25px;letter-spacing:-.03em;line-height:1;
+}
+.tool .app img{width:70%;height:70%;object-fit:contain}
+.tool:hover .app{transform:translate(-1px,-2px);box-shadow:4px 5px 0 var(--ink)}
+
+/* projects */
+.proj .num{font:700 16px 'Pixelify Sans',monospace;opacity:.6}
+.proj .tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;padding:0;list-style:none}
+.tags li{padding:3px 10px;background:var(--lilac);border:2px solid var(--ink);border-radius:99px;font-size:13px;font-weight:600}
+.shots{display:flex;gap:10px;overflow-x:auto;margin:0 0 14px;padding:2px 4px 10px 2px}
+.shots img,.shots video{flex:none;height:150px;width:auto;background:#fff;border:2px solid var(--ink);border-radius:8px}
+
+/* dock */
+.dock{
+  position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:5000;
+  display:flex;gap:10px;padding:8px 10px;background:var(--paper);border:2px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink);
+}
+.dock button{
+  position:relative;width:46px;height:46px;display:grid;place-items:center;background:var(--tint);
+  border:2px solid var(--ink);border-radius:12px;cursor:pointer;
+}
+.dock button:hover{transform:translateY(-3px)}
+.dock button.img{background:none;border:0;border-radius:0;padding:0}
+.dock button.img img{display:block;width:100%;height:100%;filter:drop-shadow(2px 2px 0 var(--ink))}
+.dock button[data-running="true"]::after{
+  content:"";position:absolute;bottom:-10px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--ink);
+}
+
+/* bunny */
+#bunny{position:fixed;left:0;top:0;z-index:9999;pointer-events:none}
+#bunny[hidden]{display:none}
+
+/* small screens: windows become full sheets */
+@media (max-width:720px){
+  .menubar .right a{display:none}
+  .icons{right:12px;left:12px;top:12px;bottom:auto;flex-direction:row;gap:8px 4px}
+  .icon{width:calc(33.33% - 4px)}
+  .win,.win.max{left:0!important;top:0!important;width:100%!important;max-width:100%;height:calc(100% - 84px)!important;max-height:none;border-radius:0;border-width:0 0 2px 0;box-shadow:none}
+  .win.active{box-shadow:none}
+  .bar{cursor:default}
+  .bar button[data-act="max"]{display:none}
+  .skill{grid-template-columns:1fr}
+  .tools{grid-template-columns:repeat(3,1fr)}
+  .row{flex-direction:column;gap:2px}
+  .dock{bottom:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  .win.pop{animation:none}
+  .icon:hover .tile,.btn:hover,.dock button:hover,.tool:hover .app{transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+  <symbol id="i-bunny" viewBox="0 0 24 24"><path d="M8 12V5.5a1.5 1.5 0 0 1 3 0V11M13 11V5.5a1.5 1.5 0 0 1 3 0V12"/><ellipse cx="12" cy="16.5" rx="6" ry="4.5"/><circle cx="10" cy="16" r=".8"/><circle cx="14" cy="16" r=".8"/></symbol>
+</svg>
+
+<header class="menubar">
+  <button class="brand" data-win="welcome" aria-label="Open welcome window">princesssir</button>
+  <div class="right">
+    <a href="https://github.com/Princesssir">github</a>
+    <a href="https://www.linkedin.com/in/chidera-onuegbu">linkedin</a>
+    <time id="clock" title="Berlin time"></time>
+  </div>
+</header>
+
+<main class="desktop" id="desktop">
+
+  <nav class="icons" aria-label="Desktop">
+    <button class="icon" data-win="about" style="--tint:var(--pink)"><span class="tile img"><img src="img/icons/me.png" alt="" width="58" height="58"></span>about me</button>
+    <button class="icon" data-win="projects" style="--tint:var(--orange)"><span class="tile img"><img src="img/icons/projects.png" alt="" width="58" height="58"></span>projects</button>
+    <button class="icon" data-win="skills" style="--tint:var(--lilac)"><span class="tile img"><img src="img/icons/software.png" alt="" width="58" height="58"></span>software and tools</button>
+    <button class="icon" data-win="contact" style="--tint:var(--butter)"><span class="tile img"><img src="img/icons/contact.png" alt="" width="58" height="58"></span>contact</button>
+    <button class="icon" id="bunnyBtn" aria-pressed="false" style="--tint:#fff"><span class="tile"><svg class="ic"><use href="#i-bunny"/></svg></span><span id="bunnyLabel">you like bunnies?</span></button>
+  </nav>
+
+  <!-- WELCOME -->
+  <section class="win" id="welcome" data-title="welcome" data-icon="home" data-tint="butter" data-x="230" data-y="36" data-w="560" hidden>
+    <div class="body">
+      <h1>Building systems people actually want to play with.</h1>
+      <p class="lead">I work across programming, gameplay, and narrative, with experience building both interactive experiences and practical digital systems.</p>
+      <p>As a game design student and digital transformation professional, I enjoy taking ideas from concept to something people can interact with, use, and experience.</p>
+      <div class="btns">
+        <button class="btn" data-win="projects">Open projects</button>
+        <button class="btn alt" data-win="about">About me</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="win" id="about" data-title="about me" data-icon="user" data-img="me" data-tint="pink" data-x="170" data-y="80" data-w="520" hidden>
+    <div class="body">
+      <h1>Creative engineer in Berlin.</h1>
+      <p>I'm a game engineering student at Mediadesign University of Applied Sciences and I've spent the last year as a digitalization working student at Corning, building tools and reports on the Microsoft Power Platform.</p>
+      <p>I like the space between the two worlds: the structure of engineering and the feel of a good game. Both are about making something work for the person using it.</p>
+      <div class="btns">
+        <button class="btn" data-win="projects">See projects</button>
+        <button class="btn alt" data-win="contact">Get in touch</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS (icons come from the TOOLS list in the script) -->
+  <section class="win" id="skills" data-title="software and tools" data-icon="sliders" data-img="software" data-tint="lilac" data-x="300" data-y="70" data-w="580" hidden>
+    <div class="body">
+      <h1>Software and tools</h1>
+      <ul class="tools" id="toolList"></ul>
+    </div>
+  </section>
+
+  <!-- PROJECTS (content comes from the PROJECTS list in the script) -->
+  <section class="win" id="projects" data-title="projects" data-icon="folder" data-img="projects" data-tint="orange" data-x="200" data-y="48" data-w="660" hidden>
+    <div class="body" id="projectList"></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="win" id="contact" data-title="contact" data-icon="mail" data-img="contact" data-tint="butter" data-x="380" data-y="110" data-w="440" hidden>
+    <div class="body">
+      <p class="lead">The best way to reach me is email. I'm based in Berlin.</p>
+      <div class="links">
+        <a href="mailto:chiderap.onuegbu@gmail.com"><img src="img/icons/mail.png" alt="" width="28" height="28">chiderap.onuegbu@gmail.com</a>
+        <a href="https://www.linkedin.com/in/chidera-onuegbu"><svg class="ic sm"><use href="#i-user"/></svg>linkedin</a>
+        <a href="https://github.com/Princesssir"><svg class="ic sm"><use href="#i-folder"/></svg>github</a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="dock" aria-label="Dock">
+    <button class="img" data-win="about" aria-label="About me" title="About me"><img src="img/icons/me.png" alt="" width="46" height="46"></button>
+    <button class="img" data-win="projects" aria-label="Projects" title="Projects"><img src="img/icons/projects.png" alt="" width="46" height="46"></button>
+    <button class="img" data-win="skills" aria-label="Software and tools" title="Software and tools"><img src="img/icons/software.png" alt="" width="46" height="46"></button>
+    <button class="img" data-win="contact" aria-label="Contact" title="Contact"><img src="img/icons/mail.png" alt="" width="46" height="46"></button>
+  </nav>
+</main>
+
+<!-- the bunny -->
+<div id="bunny" hidden aria-hidden="true">
+  <svg viewBox="0 0 17 17" width="42" height="42" shape-rendering="crispEdges">
+    <g fill="#1d1b3b">
+      <rect x="3" y="0" width="4" height="7"/><rect x="8" y="0" width="4" height="7"/>
+      <rect x="2" y="5" width="11" height="7"/>
+      <rect x="3" y="10" width="12" height="6"/>
+      <rect x="13" y="11" width="4" height="4"/>
+    </g>
+    <g fill="#fff">
+      <rect x="4" y="1" width="2" height="5"/><rect x="9" y="1" width="2" height="5"/>
+      <rect x="3" y="6" width="9" height="5"/>
+      <rect x="4" y="11" width="10" height="4"/>
+      <rect x="14" y="12" width="2" height="2"/>
+    </g>
+    <g fill="#ff8cb8">
+      <rect x="4" y="2" width="1" height="3"/><rect x="10" y="2" width="1" height="3"/>
+      <rect x="7" y="9" width="1" height="1"/>
+    </g>
+    <g fill="#1d1b3b"><rect x="5" y="8" width="1" height="1"/><rect x="9" y="8" width="1" height="1"/></g>
+  </svg>
+</div>
+
+<script>
+/* ---------- EDIT YOUR PROJECTS HERE ----------
+   Each entry becomes a block in the "projects" window.
+   video, images, link and cta are optional. Paths are relative to this file. */
+const PROJECTS = [
+  {
+    title: "3D Physics Jenga",
+    text: "An interactive, web-based 3D Jenga tower built with Babylon.js and powered by the Havok physics engine. Focused on physics aggregates and precise collision detection.",
+    tags: ["Babylon.js", "Havok Physics", "WebGL"],
+    link: "jenga/", cta: "Live demo"
+  },
+  {
+    title: "Crooked Clinic",
+    video: "img/media1-17.mp4",
+    images: ["img/image29-40.png", "img/image31-42.png", "img/image1-10.png", "img/image11-22.png", "img/image22-33.png"],
+    text: "A team-built incremental game driven entirely by mouse clicks. I worked on the save system, patient admit/reject logic, player-guidance UI, and patient stat refresh systems.",
+    tags: ["Godot", "C#", "Team of 9"],
+    link: "https://github.com/HerkusABG/MonsterClinic", cta: "GitHub"
+  },
+  {
+    title: "Kiosk 69",
+    video: "img/kiosk69.mp4",
+    images: ["img/kiosk69-1.jpg", "img/kiosk69-2.jpg", "img/kiosk69-3.jpg", "img/kiosk69-4.jpg", "img/kiosk69-5.jpg"],
+    text: "A VR kiosk simulator set in a fictional post-communist city in the year 2000. As a cashier running an under-the-counter shop, every customer interaction is a trust-or-trick call: read their order and behavior, then decide whether to charge fairly, overcharge, or cut them a discount. Between shifts, reinvest earnings into upgrading the kiosk and restocking inventory.",
+    tags: ["Unity", "Meta Quest", "VR Simulator", "Team of 7", "C#"]
+  }
+];
+
+/* ---------- EDIT YOUR TOOLS HERE ----------
+   Each entry becomes an app-style tile in the "software and tools" window.
+   Without "src" it draws a colored tile with a short mark. To use an official logo instead,
+   save it in your repo (for example img/tools/unity.svg) and add  src: "img/tools/unity.svg"  */
+const TOOLS = [
+  { name: "Unity",          mark: "U",    bg: "#222c37", fg: "#ffffff" },
+  { name: "Godot",          mark: "G",    bg: "#478cbf", fg: "#ffffff" },
+  { name: "C#",             mark: "C#",   bg: "#68217a", fg: "#ffffff" },
+  { name: "HTML",           mark: "5",    bg: "#e34f26", fg: "#ffffff" },
+  { name: "JavaScript",     mark: "JS",   bg: "#f7df1e", fg: "#1d1b3b" },
+  { name: "Maya",           mark: "Ma",   bg: "#37a5cc", fg: "#ffffff" },
+  { name: "Photoshop",      mark: "Ps",   bg: "#001e36", fg: "#31a8ff" },
+  { name: "Canva",          mark: "C",    bg: "linear-gradient(135deg,#00c4cc,#7d2ae8)", fg: "#ffffff" },
+  { name: "Power Platform", mark: "P",    bg: "linear-gradient(135deg,#742774,#c13584)", fg: "#ffffff" },
+  { name: "PowerPoint",     mark: "P",    bg: "#c43e1c", fg: "#ffffff" },
+  { name: "Jira",           mark: "J",    bg: "#0052cc", fg: "#ffffff" },
+  { name: "Miro",           mark: "m",    bg: "#ffd02f", fg: "#1d1b3b" }
+];
+
+/* ---------- window manager ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const desk = $('#desktop');
+const wins = $$('.win');
+const mobile = matchMedia('(max-width:720px)');
+const reduce = matchMedia('(prefers-reduced-motion:reduce)');
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+let z = 10;
+
+$('#toolList').innerHTML = TOOLS.map(t => t.src
+  ? `<li class="tool"><span class="app" style="background:#fff"><img src="${t.src}" alt=""></span>${t.name}</li>`
+  : `<li class="tool"><span class="app" style="background:${t.bg};color:${t.fg}" aria-hidden="true">${t.mark}</span>${t.name}</li>`
+).join('');
+
+$('#projectList').innerHTML = PROJECTS.map((p, i) => {
+  const media = (p.video || p.images) ? `<div class="shots">
+    ${p.video ? `<video src="${p.video}" controls preload="none" muted playsinline></video>` : ''}
+    ${(p.images || []).map((src, n) => `<img src="${src}" alt="${p.title} screenshot ${n + 1}" loading="lazy">`).join('')}
+  </div>` : '';
+  return `<article class="proj">
+    <span class="num">${String(i + 1).padStart(2, '0')}</span>
+    <h2>${p.title}</h2>
+    ${media}
+    <p>${p.text}</p>
+    <ul class="tags">${p.tags.map(t => `<li>${t}</li>`).join('')}</ul>
+    ${p.link ? `<a class="btn" href="${p.link}">${p.cta || 'View project'}</a>` : ''}
+  </article>`;
+}).join('');
+
+wins.forEach(w => {
+  const t = w.dataset.title;
+  w.style.setProperty('--tint', `var(--${w.dataset.tint})`);
+  w.style.width = w.dataset.w + 'px';
+  w.setAttribute('role', 'dialog');
+  w.setAttribute('aria-label', t);
+  w.tabIndex = -1;
+  w.insertAdjacentHTML('afterbegin', `
+    <header class="bar">
+      <span class="title">${w.dataset.img ? `<img class="ic sm" src="img/icons/${w.dataset.img}.png" alt="">` : `<svg class="ic sm"><use href="#i-${w.dataset.icon}"/></svg>`}${t}</span>
+      <button data-act="min" aria-label="Minimize ${t}">&minus;</button>
+      <button data-act="max" aria-label="Maximize ${t}">&#9633;</button>
+      <button data-act="close" aria-label="Close ${t}">&times;</button>
+    </header>`);
+
+  w.addEventListener('pointerdown', () => focusWin(w));
+
+  $('.bar', w).addEventListener('pointerdown', e => {
+    if (e.target.closest('button') || mobile.matches || w.classList.contains('max')) return;
+    const bar = e.currentTarget;
+    const sx = e.clientX, sy = e.clientY, ox = w.offsetLeft, oy = w.offsetTop;
+    bar.setPointerCapture(e.pointerId);
+    bar.style.cursor = 'grabbing';
+    const move = ev => {
+      const d = desk.getBoundingClientRect();
+      w.style.left = clamp(ox + ev.clientX - sx, 80 - w.offsetWidth, d.width - 80) + 'px';
+      w.style.top = clamp(oy + ev.clientY - sy, 0, d.height - 60) + 'px';
+    };
+    const up = () => {
+      bar.style.cursor = '';
+      bar.removeEventListener('pointermove', move);
+      bar.removeEventListener('pointerup', up);
+      bar.removeEventListener('pointercancel', up);
+    };
+    bar.addEventListener('pointermove', move);
+    bar.addEventListener('pointerup', up);
+    bar.addEventListener('pointercancel', up);
+  });
+
+  w.addEventListener('click', e => {
+    const act = e.target.closest('[data-act]')?.dataset.act;
+    if (!act) return;
+    if (act === 'max') w.classList.toggle('max');
+    if (act === 'min') { w.classList.add('min'); updateDock(); focusTop(); }
+    if (act === 'close') { closeWin(w); }
+  });
+});
+
+function visibleWins() {
+  return wins.filter(w => !w.hidden && !w.classList.contains('min'));
+}
+function focusWin(w) {
+  w.style.zIndex = ++z;
+  wins.forEach(x => x.classList.toggle('active', x === w));
+}
+function focusTop() {
+  const top = visibleWins().sort((a, b) => b.style.zIndex - a.style.zIndex)[0];
+  wins.forEach(x => x.classList.toggle('active', x === top));
+  return top;
+}
+function place(w) {
+  const d = desk.getBoundingClientRect();
+  w.style.left = clamp(+w.dataset.x, 8, Math.max(8, d.width - w.offsetWidth - 8)) + 'px';
+  w.style.top = clamp(+w.dataset.y, 8, Math.max(8, d.height - w.offsetHeight - 96)) + 'px';
+}
+function openWin(id) {
+  const w = document.getElementById(id);
+  const wasHidden = w.hidden;
+  w.hidden = false;
+  w.classList.remove('min');
+  if (wasHidden) {
+    place(w);
+    if (!reduce.matches) {
+      w.classList.add('pop');
+      w.addEventListener('animationend', () => w.classList.remove('pop'), { once: true });
+    }
+  }
+  focusWin(w);
+  updateDock();
+}
+function closeWin(w) {
+  w.hidden = true;
+  w.classList.remove('max', 'min');
+  updateDock();
+  focusTop();
+}
+function updateDock() {
+  $$('.dock [data-win]').forEach(b => {
+    b.dataset.running = String(!document.getElementById(b.dataset.win).hidden);
+  });
+}
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-win]');
+  if (!t) return;
+  const w = document.getElementById(t.dataset.win);
+  if (t.closest('.dock')) {
+    if (w.hidden || w.classList.contains('min')) openWin(w.id);
+    else if (w.classList.contains('active')) { w.classList.add('min'); updateDock(); focusTop(); }
+    else focusWin(w);
+  } else {
+    openWin(w.id);
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  const top = visibleWins().sort((a, b) => b.style.zIndex - a.style.zIndex)[0];
+  if (top) closeWin(top);
+});
+
+window.addEventListener('resize', () => visibleWins().forEach(w => {
+  if (!mobile.matches && !w.classList.contains('max')) place(w);
+}));
+
+/* ---------- clock (Berlin time) ---------- */
+const clock = $('#clock');
+function tick() {
+  const d = new Date();
+  const date = new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Europe/Berlin' }).format(d);
+  const time = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Berlin' }).format(d);
+  clock.textContent = `${date}, ${time}`;
+}
+tick();
+setInterval(tick, 15000);
+
+/* ---------- the bunny ---------- */
+const bunny = $('#bunny');
+const bunnyBtn = $('#bunnyBtn');
+let bunnyOn = false, raf = 0, hop = null, rest = 0;
+let tx = innerWidth / 2, ty = innerHeight / 2, cx = 80, cy = innerHeight - 80, dir = 1;
+addEventListener('pointermove', e => { tx = e.clientX + 18; ty = e.clientY + 18; });
+function loop() {
+  let lift = 0;
+  if (hop) {
+    hop.t += 0.065;
+    const k = Math.min(hop.t, 1);
+    cx = hop.sx + hop.dx * k;
+    cy = hop.sy + hop.dy * k;
+    lift = reduce.matches ? 0 : Math.sin(Math.PI * k) * 22;
+    if (hop.t >= 1) { hop = null; rest = 10; }
+  } else if (rest > 0) {
+    rest--;
+  } else {
+    const dx = tx - cx, dy = ty - cy, dist = Math.hypot(dx, dy);
+    if (dist > 16) {
+      const len = Math.min(64, dist);
+      hop = { t: 0, sx: cx, sy: cy, dx: dx / dist * len, dy: dy / dist * len };
+      if (Math.abs(dx) > 4) dir = dx > 0 ? -1 : 1;
+    }
+  }
+  bunny.style.transform = `translate(${cx - 21}px,${cy - 34 - lift}px) scaleX(${dir})`;
+  raf = requestAnimationFrame(loop);
+}
+bunnyBtn.addEventListener('click', () => {
+  bunnyOn = !bunnyOn;
+  bunny.hidden = !bunnyOn;
+  bunnyBtn.setAttribute('aria-pressed', bunnyOn);
+  $('#bunnyLabel').textContent = bunnyOn ? 'hide the bunny' : 'you like bunnies?';
+  cancelAnimationFrame(raf);
+  if (bunnyOn) loop();
+});
+
+/* ---------- start ---------- */
+openWin('welcome');
+</script>
+</body>
+</html>
