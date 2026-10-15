@@ -19,12 +19,13 @@
   --mint:#78e4b6;
   --lilac:#c9b8ff;
   --orange:#ffb56b;
+  --shadow:#c9b8ff;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
 body{
   font-family:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
-  color:var(--ink);background:var(--sky);overflow:hidden;
+  color:var(--ink);background:#000;overflow:hidden;
   display:flex;flex-direction:column;
 }
 :focus-visible{outline:3px solid var(--pink);outline-offset:2px}
@@ -47,8 +48,8 @@ a{color:inherit}
 .desktop{
   position:relative;flex:1;min-height:0;overflow:hidden;
   background:
-    radial-gradient(circle at 1px 1px,rgba(29,27,59,.2) 1.2px,transparent 1.6px) 0 0/24px 24px,
-    linear-gradient(165deg,var(--sky-2),var(--sky));
+    radial-gradient(circle at 1px 1px,rgba(255,255,255,.16) 1.2px,transparent 1.6px) 0 0/24px 24px,
+    #000;
 }
 .icons{
   position:absolute;top:16px;left:16px;bottom:96px;
@@ -56,19 +57,19 @@ a{color:inherit}
 }
 .icon{
   width:92px;display:flex;flex-direction:column;align-items:center;gap:7px;padding:4px;
-  background:none;border:0;border-radius:10px;font:600 13px/1.2 inherit;font-family:inherit;color:var(--ink);cursor:pointer;text-align:center;
+  background:none;border:0;border-radius:10px;font:600 13px/1.2 inherit;font-family:inherit;color:var(--paper);cursor:pointer;text-align:center;
 }
 .icon .tile{
   width:54px;height:54px;display:grid;place-items:center;background:var(--tint);
-  border:2px solid var(--ink);border-radius:13px;box-shadow:3px 3px 0 var(--ink);
+  border:2px solid var(--ink);border-radius:13px;box-shadow:3px 3px 0 var(--shadow);
 }
-.icon:hover .tile{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
-.icon:active .tile{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.icon:hover .tile{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--shadow)}
+.icon:active .tile{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
 .icon .tile.img{width:58px;height:58px;display:block;background:none;border:0;border-radius:0;box-shadow:none}
-.icon .tile.img img{display:block;width:100%;height:100%;filter:drop-shadow(3px 3px 0 var(--ink))}
+.icon .tile.img img{display:block;width:100%;height:100%;filter:drop-shadow(3px 3px 0 var(--shadow))}
 .icon:hover .tile.img{box-shadow:none}
-.icon:hover .tile.img img{filter:drop-shadow(4px 4px 0 var(--ink))}
-.icon:active .tile.img img{filter:drop-shadow(1px 1px 0 var(--ink))}
+.icon:hover .tile.img img{filter:drop-shadow(4px 4px 0 var(--shadow))}
+.icon:active .tile.img img{filter:drop-shadow(1px 1px 0 var(--shadow))}
 .bar img.ic{width:20px;height:20px;object-fit:contain}
 .links img{flex:none;width:28px;height:28px}
 .ic{width:26px;height:26px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -78,10 +79,10 @@ a{color:inherit}
 .win{
   position:absolute;display:flex;flex-direction:column;
   max-width:calc(100% - 16px);max-height:calc(100% - 100px);
-  background:var(--paper);border:2px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink);overflow:hidden;
+  background:var(--paper);border:2px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--shadow);overflow:hidden;
 }
 .win[hidden],.win.min{display:none}
-.win.active{box-shadow:7px 7px 0 var(--ink)}
+.win.active{box-shadow:7px 7px 0 var(--shadow)}
 .win.max{left:8px!important;top:8px!important;width:calc(100% - 16px)!important;height:calc(100% - 100px)!important;max-height:none}
 .win.pop{animation:pop .18s ease-out}
 @keyframes pop{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
@@ -148,7 +149,7 @@ a{color:inherit}
 /* dock */
 .dock{
   position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:5000;
-  display:flex;gap:10px;padding:8px 10px;background:var(--paper);border:2px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink);
+  display:flex;gap:10px;padding:8px 10px;background:var(--paper);border:2px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--shadow);
 }
 .dock button{
   position:relative;width:46px;height:46px;display:grid;place-items:center;background:var(--tint);
@@ -156,7 +157,7 @@ a{color:inherit}
 }
 .dock button:hover{transform:translateY(-3px)}
 .dock button.img{background:none;border:0;border-radius:0;padding:0}
-.dock button.img img{display:block;width:100%;height:100%;filter:drop-shadow(2px 2px 0 var(--ink))}
+.dock button.img img{display:block;width:100%;height:100%;filter:drop-shadow(2px 2px 0 var(--shadow))}
 .dock button[data-running="true"]::after{
   content:"";position:absolute;bottom:-10px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--ink);
 }
@@ -210,10 +211,10 @@ a{color:inherit}
 <main class="desktop" id="desktop">
 
   <nav class="icons" aria-label="Desktop">
-    <button class="icon" data-win="about" style="--tint:var(--pink)"><span class="tile img"><img src="img/icons/me.png" alt="" width="58" height="58"></span>about me</button>
-    <button class="icon" data-win="projects" style="--tint:var(--orange)"><span class="tile img"><img src="img/icons/projects.png" alt="" width="58" height="58"></span>projects</button>
-    <button class="icon" data-win="skills" style="--tint:var(--lilac)"><span class="tile img"><img src="img/icons/software.png" alt="" width="58" height="58"></span>software and tools</button>
-    <button class="icon" data-win="contact" style="--tint:var(--butter)"><span class="tile img"><img src="img/icons/contact.png" alt="" width="58" height="58"></span>contact</button>
+    <button class="icon" data-win="about" style="--tint:var(--pink)"><span class="tile img"><img src="img/me.png" alt="" width="58" height="58"></span>about me</button>
+    <button class="icon" data-win="projects" style="--tint:var(--orange)"><span class="tile img"><img src="img/projects.png" alt="" width="58" height="58"></span>projects</button>
+    <button class="icon" data-win="skills" style="--tint:var(--lilac)"><span class="tile img"><img src="img/software.png" alt="" width="58" height="58"></span>software and tools</button>
+    <button class="icon" data-win="contact" style="--tint:var(--butter)"><span class="tile img"><img src="img/contact.png" alt="" width="58" height="58"></span>contact</button>
     <button class="icon" id="bunnyBtn" aria-pressed="false" style="--tint:#fff"><span class="tile"><svg class="ic"><use href="#i-bunny"/></svg></span><span id="bunnyLabel">you like bunnies?</span></button>
   </nav>
 
@@ -234,7 +235,7 @@ a{color:inherit}
   <section class="win" id="about" data-title="about me" data-icon="user" data-img="me" data-tint="pink" data-x="170" data-y="80" data-w="520" hidden>
     <div class="body">
       <h1>Creative engineer in Berlin.</h1>
-      <p>I'm a game engineering student I work across programming, gameplay, and narrative, with experience building both interactive experiences and practical digital systems.</p>
+      <p>I'm a game engineering student at Mediadesign University of Applied Sciences and I've spent the last year as a digitalization working student at Corning, building tools and reports on the Microsoft Power Platform.</p>
       <p>I like the space between the two worlds: the structure of engineering and the feel of a good game. Both are about making something work for the person using it.</p>
       <div class="btns">
         <button class="btn" data-win="projects">See projects</button>
@@ -261,7 +262,7 @@ a{color:inherit}
     <div class="body">
       <p class="lead">The best way to reach me is email. I'm based in Berlin.</p>
       <div class="links">
-        <a href="mailto:chiderap.onuegbu@gmail.com"><img src="img/icons/mail.png" alt="" width="28" height="28">chiderap.onuegbu@gmail.com</a>
+        <a href="mailto:chiderap.onuegbu@gmail.com"><img src="img/mail.png" alt="" width="28" height="28">chiderap.onuegbu@gmail.com</a>
         <a href="https://www.linkedin.com/in/chidera-onuegbu"><svg class="ic sm"><use href="#i-user"/></svg>linkedin</a>
         <a href="https://github.com/Princesssir"><svg class="ic sm"><use href="#i-folder"/></svg>github</a>
       </div>
@@ -269,10 +270,10 @@ a{color:inherit}
   </section>
 
   <nav class="dock" aria-label="Dock">
-    <button class="img" data-win="about" aria-label="About me" title="About me"><img src="img/icons/me.png" alt="" width="46" height="46"></button>
-    <button class="img" data-win="projects" aria-label="Projects" title="Projects"><img src="img/icons/projects.png" alt="" width="46" height="46"></button>
-    <button class="img" data-win="skills" aria-label="Software and tools" title="Software and tools"><img src="img/icons/software.png" alt="" width="46" height="46"></button>
-    <button class="img" data-win="contact" aria-label="Contact" title="Contact"><img src="img/icons/mail.png" alt="" width="46" height="46"></button>
+    <button class="img" data-win="about" aria-label="About me" title="About me"><img src="img/me.png" alt="" width="46" height="46"></button>
+    <button class="img" data-win="projects" aria-label="Projects" title="Projects"><img src="img/projects.png" alt="" width="46" height="46"></button>
+    <button class="img" data-win="skills" aria-label="Software and tools" title="Software and tools"><img src="img/software.png" alt="" width="46" height="46"></button>
+    <button class="img" data-win="contact" aria-label="Contact" title="Contact"><img src="img/mail.png" alt="" width="46" height="46"></button>
   </nav>
 </main>
 
@@ -385,7 +386,7 @@ wins.forEach(w => {
   w.tabIndex = -1;
   w.insertAdjacentHTML('afterbegin', `
     <header class="bar">
-      <span class="title">${w.dataset.img ? `<img class="ic sm" src="img/icons/${w.dataset.img}.png" alt="">` : `<svg class="ic sm"><use href="#i-${w.dataset.icon}"/></svg>`}${t}</span>
+      <span class="title">${w.dataset.img ? `<img class="ic sm" src="img/${w.dataset.img}.png" alt="">` : `<svg class="ic sm"><use href="#i-${w.dataset.icon}"/></svg>`}${t}</span>
       <button data-act="min" aria-label="Minimize ${t}">&minus;</button>
       <button data-act="max" aria-label="Maximize ${t}">&#9633;</button>
       <button data-act="close" aria-label="Close ${t}">&times;</button>
